@@ -1,0 +1,57 @@
+.header {
+    height: 64px;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    box-shadow: var(--shadow-sm);
+    z-index: 10;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--text-main);
+}
+
+.logoIcon {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.themeToggle {
+    padding: 8px;
+    border-radius: 50%;
+    color: var(--text-muted);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.themeToggle:hover {
+    background-color: var(--bg-body);
+    color: var(--primary-color);
+}
+
+.userProfile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background-color: var(--bg-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+}

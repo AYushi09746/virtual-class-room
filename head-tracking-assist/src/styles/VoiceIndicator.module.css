@@ -1,0 +1,104 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 30px;
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.iconWrapper {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+/* Status variants */
+.listening .iconWrapper {
+    color: var(--accent-color);
+    background: rgba(59, 130, 246, 0.1);
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.processing .iconWrapper {
+    color: var(--warning-color, #fbbf24);
+    background: rgba(251, 191, 36, 0.1);
+}
+
+.active .iconWrapper {
+    color: var(--success-color);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+/* Wave visualizer */
+.waveContainer {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.wave {
+    width: 6px;
+    height: 100%;
+    background-color: var(--text-secondary);
+    border-radius: 3px;
+    animation: soundWave 1.2s infinite ease-in-out;
+    opacity: 0.3;
+}
+
+.listening .wave {
+    background-color: var(--accent-color);
+    opacity: 1;
+}
+
+.listening .wave:nth-child(1) {
+    animation-delay: 0.0s;
+    height: 15px;
+}
+
+.listening .wave:nth-child(2) {
+    animation-delay: 0.1s;
+    height: 25px;
+}
+
+.listening .wave:nth-child(3) {
+    animation-delay: 0.2s;
+    height: 15px;
+}
+
+.listening .wave:nth-child(4) {
+    animation-delay: 0.3s;
+    height: 20px;
+}
+
+@keyframes soundWave {
+
+    0%,
+    100% {
+        transform: scaleY(0.5);
+    }
+
+    50% {
+        transform: scaleY(1.2);
+    }
+}
+
+.statusText {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+}
