@@ -7,7 +7,9 @@ export const useHeadTracking = (videoRef, updateTracking) => {
     const trackingRef = useRef({
         faceMesh: null,
         camera: null,
-        isInitialized: false
+        isInitialized: false,
+        smoothedYaw: 0,
+        smoothedPitch: 0
     });
 
     useEffect(() => {
@@ -36,7 +38,6 @@ export const useHeadTracking = (videoRef, updateTracking) => {
                 try {
                     const faceMesh = new FaceMesh({
                         locateFile: (file) => {
-                            // Robust path handling
                             return `/mediapipe/${file}`;
                         }
                     });
@@ -96,21 +97,14 @@ export const useHeadTracking = (videoRef, updateTracking) => {
             if (trackingRef.current.faceMesh) trackingRef.current.faceMesh.close();
             trackingRef.current.isInitialized = false;
         };
-    }, [videoRef]); // Restart when videoRef changes (e.g. from null to valid ref)
+    }, [videoRef]);
 
-    // Helper: Logic for Head Pose Calculation
+    // Helper: Logic for Head Pose Calculation with Smoothing and Deadzone
     const onResults = (results, callback) => {
         if (!callback) return;
 
         if (results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0) {
             const landmarks = results.multiFaceLandmarks[0];
-
-            // --- SIMPLE ROBUST HEAD POSE LOGIC ---
-            // 1. Nose Tip (1)
-            // 2. Left Ear (234)
-            // 3. Right Ear (454)
-            // 4. Chin (152)
-            // 5. Forehead (10)
 
             const nose = landmarks[1];
             const leftEar = landmarks[234];
@@ -118,55 +112,68 @@ export const useHeadTracking = (videoRef, updateTracking) => {
             const chin = landmarks[152];
             const forehead = landmarks[10];
 
-            // YAW (Horizontal): Left/Right
-            // Range: -0.5 (Left) to +0.5 (Right)
-            const midPointX = (leftEar.x + rightEar.x) / 2;
-            const yaw = (nose.x - midPointX) * 20; // Amplifier
+            // CONFIGURATION
+            const SMOOTHING_FACTOR = 0.25; // Lower = smoother but slower
+            const DEADZONE = 0.08; // Ignore movements smaller than this
+            const SENSITIVITY = 25; // Amplification
 
-            // PITCH (Vertical): Up/Down
-            // Range: -0.5 (Up) to +0.5 (Down)
-            const midPointY = (forehead.y + chin.y) / 2;
-            const pitch = (nose.y - midPointY) * 20; // Amplifier
+            // YAW (Horizontal)
+            const midPointX = (leftEar.x + rightEar.x) / 2;
+            let rawYaw = (nose.x - midPointX) * SENSITIVITY;
+
+            // PITCH (Vertical) - Adjusted baseline to fix "not going down" issue
+            // We use a slight offset because nose is naturally higher than midpoint for the model
+            const midPointY = ((forehead.y + chin.y) / 2) - 0.02; 
+            let rawPitch = (nose.y - midPointY) * SENSITIVITY;
+
+            // Apply Deadzone (Prevent jitter from normal movements)
+            if (Math.abs(rawYaw) < DEADZONE) rawYaw = 0;
+            if (Math.abs(rawPitch) < DEADZONE) rawPitch = 0;
+
+            // Apply EMA Smoothing
+            trackingRef.current.smoothedYaw = 
+                (rawYaw * SMOOTHING_FACTOR) + (trackingRef.current.smoothedYaw * (1 - SMOOTHING_FACTOR));
+            
+            trackingRef.current.smoothedPitch = 
+                (rawPitch * SMOOTHING_FACTOR) + (trackingRef.current.smoothedPitch * (1 - SMOOTHING_FACTOR));
 
             // --- GESTURE DETECTION (Mouth Click) ---
             const upperLip = landmarks[13];
             const lowerLip = landmarks[14];
-            // Calculate distance between lips relative to face height (chin to forehead) to fail-safe against zoom/distance
             const faceHeight = Math.abs(chin.y - forehead.y);
             const lipDistance = Math.abs(lowerLip.y - upperLip.y) / faceHeight;
 
             let gesture = null;
-            if (lipDistance > 0.05) { // Threshold for "Open"
+            if (lipDistance > 0.06) { 
                 gesture = "Mouth Open";
             }
 
-            // Status Logic
+            // Status Logic (Use raw values for discrete status checks)
             let status = "Facing Screen";
             let attention = 100;
+            const STATUS_THRESHOLD = 1.0;
 
-            const THRESHOLD = 0.8;
+            if (rawYaw > STATUS_THRESHOLD) { status = "Looking Left"; attention = 20; }
+            else if (rawYaw < -STATUS_THRESHOLD) { status = "Looking Right"; attention = 20; }
+            else if (rawPitch > STATUS_THRESHOLD) { status = "Looking Down"; attention = 40; }
+            else if (rawPitch < -STATUS_THRESHOLD) { status = "Looking Up"; attention = 40; }
 
-            if (yaw > THRESHOLD) { status = "Looking Left"; attention = 20; }
-            else if (yaw < -THRESHOLD) { status = "Looking Right"; attention = 20; }
-            else if (pitch > THRESHOLD) { status = "Looking Down"; attention = 40; }
-            else if (pitch < -THRESHOLD) { status = "Looking Up"; attention = 40; }
-
-            if (gesture) status = gesture; // Override status with gesture
+            if (gesture) status = gesture;
 
             callback({
                 headStatus: status,
                 attentionScore: attention,
                 isTracking: true,
-                yaw: yaw * 0.1, // Normalized for cursor
-                pitch: pitch * 0.1,
-                gesture: gesture, // Send gesture state
+                yaw: trackingRef.current.smoothedYaw * 0.1, 
+                pitch: trackingRef.current.smoothedPitch * 0.1,
+                gesture: gesture,
                 results: results
             });
         } else {
             callback({
-                headStatus: "Face Not Detected", // Running but no face found
+                headStatus: "Face Not Detected",
                 attentionScore: 0,
-                isTracking: true, // Still "tracking", just no face
+                isTracking: true,
                 yaw: 0,
                 pitch: 0,
                 results: null
