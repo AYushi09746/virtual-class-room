@@ -1,72 +1,57 @@
-# Accessible Virtual Classroom
+# VirtClass: AI-Powered Inclusive Classroom 🚀
 
-Accessible Virtual Classroom is a web-based learning platform designed specifically for students with disabilities. The goal of the system is to provide an inclusive, easy-to-use, and accessible digital learning environment where students can attend classes, access notes, submit assignments, and receive AI-based assistance.
+VirtClass is a next-generation virtual learning platform designed with **Human-Computer Interaction (HCI)** at its core. It empowers students with motor, visual, and cognitive disabilities through an empathy-driven interface and advanced assistive AI.
 
-## 🚀 Features
+## ✨ Premium Features
 
-- **Accessibility First**: Simple, clean user interface designed for all users.
-- **Voice Navigation**: Support for voice commands like 'Open Notes' or 'Start Quiz' via Web Speech API.
-- **Head Tracking**: Webcam-based face detection (MediaPipe) to control cursor movement for students with motor disabilities.
-- **AI-Powered Assistance**: 
-  - Chatbot to explain concepts in natural language (OpenAI API).
-  - Summarization tool to convert long notes into simple summaries.
-- **Read Aloud**: Text-to-Speech support for notes and announcements.
-- **Customization**: High contrast modes and font customization, including dyslexia-friendly fonts minimum 18px.
-- **Role-Based Access**: 
-  - **Admin**: Manage users, create classes, monitor platform.
-  - **Teacher**: Upload notes, create assignments, conduct quizzes, post announcements.
-  - **Student**: Join classes, view notes, submit assignments, take quizzes, use AI assistant.
+- **HCI-First Design**: A sophisticated "Electric Indigo" theme featuring glassmorphism, optimized visual hierarchy, and high-readability typography (Plus Jakarta Sans).
+- **Assistive AI (Gaze-to-Action)**: Webcam-based head tracking using **MediaPipe FaceMesh** for precise, hands-free navigation.
+- **Voice Link**: Full conversational interface via **Web Speech API** for navigating pages, reading content, and interacting with the AI Assistant.
+- **Accessibility Profiles**: Intelligent pre-configuration based on user needs (Motor, Visual, Cognitive) selected during a seamless login experience.
+- **Faculty Portal**: A dedicated environment for teachers to manage assignments, monitor student focus levels, and post announcements with a clean, professional UI.
+- **Smart Notes**: A focused environment for continuing lessons with integrated AI explanations and voice feedback.
 
-## 🛠️ Tech Stack
+## 🛠️ Technology Stack
 
-- **Frontend**: React.js
-- **Backend**: Node.js, Express.js
-- **Database**: MongoDB (Atlas)
-- **AI & Integrations**: OpenAI API, Web Speech API, MediaPipe
-- **Security**: JWT Authentication, bcrypt password hashing, HTTPS
+- **Frontend**: React 18+ (Vite)
+- **Styling**: Vanilla CSS (Custom Design System with Premium Tokens)
+- **Computer Vision**: @mediapipe/face_mesh
+- **Speech Engine**: Web Speech API (Recognition + Synthesis)
+- **State Management**: React Context API (Auth, Theme, Accessibility, Tracking)
 
-## 📂 Project Structure
+## 📂 Architecture Overview
 
-- `/head-tracking-assist`: React frontend application containing all web views and accessibility features (Head Tracking, Voice Navigation, etc.).
-- `/server`: Node.js & Express backend for handling API requests, authentication, and database interactions.
+- `/head-tracking-assist`: The core React engine.
+  - `/src/hooks/useHeadTracking.js`: Logic for smoothing, deadzones, and low-pass filtering of head movements.
+  - `/src/context/AccessibilityContext.jsx`: Global profile management.
+  - `/src/components/TeacherDashboard.jsx`: Reimagined faculty management portal.
+- `/server`: (Optional) Node.js backend for AI chat persistence and user management.
 
-## ⚙️ How to Run Locally
+## ⚙️ Quick Start
 
-### Prerequisites
-- [Node.js](https://nodejs.org/) installed
-- MongoDB URI (local or Atlas)
-- Relevant API Keys for AI features
+### 1. Prerequisite
+- Node.js (v16+) installed.
+- A functional webcam (for head tracking features).
 
-### Backend Setup
-1. Navigate to the `server` directory:
-   ```bash
-   cd server
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Create a `.env` file in the `server` directory and add your environment variables (e.g., `PORT`, `MONGO_URI`, `JWT_SECRET`).
-4. Start the backend server:
-   ```bash
-   npm start
-   ```
+### 2. Frontend Installation
+```bash
+cd head-tracking-assist
+npm install
+npm run dev
+```
 
-### Frontend Setup
-1. Navigate to the frontend directory:
-   ```bash
-   cd head-tracking-assist
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the React development server:
-   ```bash
-   npm run dev
-   ```
-   *(or `npm start` depending on your setup)*
+### 3. Backend (Optional for AI Chat)
+```bash
+cd server
+npm install
+npm start
+```
 
-## 👥 Objective
+## 🏆 Our Objective
+Most digital classrooms fail users with special needs due to small "hit zones", complex navigation, and lack of diverse input methods. **VirtClass** solves this by providing:
+1. **Large Hit Zones** (Fitts's Law optimization).
+2. **Contextual Voice Commands**.
+3. **Adaptive UI** that morphs based on user disability profile.
 
-Most existing online learning systems are not fully optimized for disabled users, commonly suffering from small clickable elements, complex interfaces, lack of voice navigation, limited screen reader compatibility, and no head-tracking support. Accessible Virtual Classroom aims to solve this by bringing a completely accessible alternative.
+---
+*Powered by Empathy & Artificial Intelligence.* 🏳️‍🌈
