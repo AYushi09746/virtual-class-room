@@ -1,5 +1,5 @@
 import React from 'react';
-import { MdOutlineComputer, MdDarkMode, MdLightMode, MdPerson } from 'react-icons/md';
+import { FaDesktop, FaMoon, FaSun, FaUser } from 'react-icons/fa';
 import { useTheme } from '../../context/ThemeContext';
 import styles from './Header.module.css';
 
@@ -14,7 +14,7 @@ const Header = () => {
     return (
         <header className={styles.header}>
             <div className={styles.brand}>
-                <MdOutlineComputer className={styles.logoIcon} />
+                <FaDesktop className={styles.logoIcon} />
                 <span>ProctorAI</span>
             </div>
 
@@ -24,7 +24,7 @@ const Header = () => {
                     onClick={toggleTheme}
                     aria-label="Toggle Theme"
                 >
-                    {theme === 'light' ? <MdDarkMode size={22} /> : <MdLightMode size={22} />}
+                    {theme === 'light' ? <FaMoon size={22} /> : <FaSun size={22} />}
                 </button>
 
                 <button
@@ -44,7 +44,7 @@ const Header = () => {
                         fontWeight: '500'
                     }}
                 >
-                    <MdPerson size={18} />
+                    <FaUser size={18} />
                     <span>{mode === 'student' ? 'Student View' : 'Teacher View'}</span>
                 </button>
             </div>

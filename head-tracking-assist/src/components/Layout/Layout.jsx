@@ -1,15 +1,14 @@
 import React from 'react';
 import Header from './Header';
-import Sidebar from '../Sidebar';
-import styles from './Layout.module.css';
+import Sidebar from './Sidebar';
 
 const Layout = ({ children }) => {
     return (
-        <div className={styles.layout}>
+        <div className="layout-container">
             <Sidebar />
-            <div className={styles.mainContainer}>
+            <div className="main-content">
                 <Header />
-                <main className={styles.content}>
+                <main className="page-container">
                     {children}
                 </main>
             </div>

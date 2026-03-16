@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Layout from './components/Layout';
+import Layout from './components/Layout/Layout';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
@@ -49,16 +49,19 @@ const AppContent = () => {
   );
 }
 
+import { ThemeProvider } from './context/ThemeContext';
 import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
   return (
     <ErrorBoundary>
-      <AccessibilityProvider>
-        <Router>
-          <AppContent />
-        </Router>
-      </AccessibilityProvider>
+      <ThemeProvider>
+        <AccessibilityProvider>
+          <Router>
+            <AppContent />
+          </Router>
+        </AccessibilityProvider>
+      </ThemeProvider>
     </ErrorBoundary>
   );
 }
