@@ -5,22 +5,28 @@ import {
     FaChartLine, FaCog, FaSignOutAlt, FaUserGraduate
 } from 'react-icons/fa';
 
+import { useAuth } from '../../context/AuthContext';
+
 const Sidebar = () => {
     const navigate = useNavigate();
+    const { role, logout } = useAuth();
 
     const handleLogout = () => {
+        logout();
         navigate('/login');
     };
 
-    const navItems = [
+    const allNavItems = [
         { name: 'Dashboard', icon: <FaThLarge />, path: '/dashboard' },
-        { name: 'My Courses', icon: <FaBook />, path: '/courses' },
-        { name: 'AI Assistant', icon: <FaRobot />, path: '/ai-assistant' },
+        { name: 'My Courses', icon: <FaBook />, path: '/courses', roles: ['student'] },
+        { name: 'AI Assistant', icon: <FaRobot />, path: '/ai-assistant', roles: ['student'] },
         { name: 'Accessibility', icon: <FaUniversalAccess />, path: '/accessibility' },
-        { name: 'Progress', icon: <FaChartLine />, path: '/progress' },
-        { name: 'Teacher Portal', icon: <FaUserGraduate />, path: '/teacher' },
+        { name: 'Progress', icon: <FaChartLine />, path: '/progress', roles: ['student'] },
+        { name: 'Teacher Portal', icon: <FaUserGraduate />, path: '/teacher', roles: ['teacher'] },
         { name: 'Settings', icon: <FaCog />, path: '/settings' },
     ];
+
+    const navItems = allNavItems.filter(item => !item.roles || item.roles.includes(role));
 
     return (
         <aside className="sidebar">

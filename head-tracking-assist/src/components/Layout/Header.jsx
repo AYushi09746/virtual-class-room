@@ -1,15 +1,12 @@
 import React from 'react';
 import { FaDesktop, FaMoon, FaSun, FaUser } from 'react-icons/fa';
 import { useTheme } from '../../context/ThemeContext';
+import { useAuth } from '../../context/AuthContext';
 import styles from './Header.module.css';
 
 const Header = () => {
     const { theme, toggleTheme } = useTheme();
-    const [mode, setMode] = React.useState('student');
-
-    const toggleMode = () => {
-        setMode(prev => prev === 'student' ? 'teacher' : 'student');
-    };
+    const { role } = useAuth();
 
     return (
         <header className={styles.header}>
@@ -27,9 +24,8 @@ const Header = () => {
                     {theme === 'light' ? <FaMoon size={22} /> : <FaSun size={22} />}
                 </button>
 
-                <button
-                    className={styles.modeToggle}
-                    onClick={toggleMode}
+                <div
+                    className={styles.userBadge}
                     style={{
                         display: 'flex',
                         alignItems: 'center',
@@ -37,16 +33,16 @@ const Header = () => {
                         padding: '6px 12px',
                         borderRadius: '20px',
                         border: '1px solid var(--border-color)',
-                        background: 'var(--bg-body)',
-                        color: 'var(--text-main)',
-                        cursor: 'pointer',
+                        background: 'var(--secondary-bg)',
+                        color: 'var(--text-dark)',
                         fontSize: '0.9rem',
-                        fontWeight: '500'
+                        fontWeight: '600',
+                        textTransform: 'capitalize'
                     }}
                 >
-                    <FaUser size={18} />
-                    <span>{mode === 'student' ? 'Student View' : 'Teacher View'}</span>
-                </button>
+                    <FaUser size={16} />
+                    <span>{role} Account</span>
+                </div>
             </div>
         </header>
     );

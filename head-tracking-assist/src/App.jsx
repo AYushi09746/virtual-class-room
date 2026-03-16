@@ -10,9 +10,13 @@ import AccessibilityTools from './pages/AccessibilityTools';
 import { AccessibilityProvider, useAccessibility } from './context/AccessibilityContext';
 import { HeadTrackingProvider } from './context/HeadTrackingContext';
 import { TrackingProvider } from './context/TrackingContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import GlobalFaceHUD from './components/GlobalFaceHUD';
 import VoiceCommand from './components/VoiceCommand';
 import TeacherDashboard from './components/TeacherDashboard';
+import Progress from './pages/Progress';
+import Settings from './pages/Settings';
+import Notes from './pages/Notes';
 import './index.css';
 
 // Wrapper component to consume Context
@@ -39,6 +43,9 @@ const AppContent = () => {
           <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
           <Route path="/teacher" element={<Layout><TeacherDashboard /></Layout>} />
           <Route path="/courses" element={<Layout><MyCourses /></Layout>} />
+          <Route path="/progress" element={<Layout><Progress /></Layout>} />
+          <Route path="/settings" element={<Layout><Settings /></Layout>} />
+          <Route path="/notes" element={<Layout><Notes /></Layout>} />
           <Route path="/ai-assistant" element={<Layout><AIAssistant /></Layout>} />
           <Route path="/accessibility" element={<Layout><AccessibilityTools /></Layout>} />
           <Route path="/" element={<Navigate to="/login" replace />} />
@@ -55,13 +62,15 @@ import ErrorBoundary from './components/ErrorBoundary';
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider>
-        <AccessibilityProvider>
-          <Router>
-            <AppContent />
-          </Router>
-        </AccessibilityProvider>
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider>
+          <AccessibilityProvider>
+            <Router>
+              <AppContent />
+            </Router>
+          </AccessibilityProvider>
+        </ThemeProvider>
+      </AuthProvider>
     </ErrorBoundary>
   );
 }

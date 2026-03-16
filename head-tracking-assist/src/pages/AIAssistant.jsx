@@ -46,12 +46,30 @@ const AIAssistant = () => {
     };
 
 
+    const startListening = () => {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            alert("Speech recognition not supported in this browser.");
+            return;
+        }
+
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'en-US';
+        recognition.start();
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            setInput(transcript);
+        };
+    };
+
+
     return (
         <div style={{ height: '80vh', display: 'flex', flexDirection: 'column' }}>
             <div className="flex-between" style={{ marginBottom: '1rem' }}>
                 <h1>AI Study Assistant</h1>
                 <div style={{ display: 'flex', gap: '1rem' }}>
-                    <button className="btn-icon" style={styles.iconBtn}><FaVolumeUp /></button>
+                    <button className="btn-icon" onClick={() => speak(messages[messages.length-1].text)} style={styles.iconBtn}><FaVolumeUp /></button>
                 </div>
             </div>
 
@@ -65,7 +83,13 @@ const AIAssistant = () => {
             </div>
 
             <div className="chat-input-area card-panel" style={{ display: 'flex', gap: '1rem', padding: '1rem', alignItems: 'center' }}>
-                <button style={{ ...styles.iconBtn, background: '#f1f5f9' }}><FaMicrophone /></button>
+                <button 
+                    style={{ ...styles.iconBtn, background: '#f1f5f9' }}
+                    onClick={startListening}
+                    title="Voice Input"
+                >
+                    <FaMicrophone />
+                </button>
                 <input
                     className="input-field"
                     placeholder="Type a message..."

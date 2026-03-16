@@ -1,6 +1,7 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const MyCourses = () => {
+    const navigate = useNavigate();
     const courses = [
         { id: 1, title: 'Web Accessibility 101', progress: 75, image: '🌐' },
         { id: 2, title: 'JavaScript Essentials', progress: 40, image: '📜' },
@@ -9,11 +10,11 @@ const MyCourses = () => {
     ];
 
     return (
-        <div>
+        <div className="animate-enter">
             <h1 style={{ marginBottom: '2rem' }}>My Courses</h1>
             <div className="courses-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '2rem' }}>
                 {courses.map(course => (
-                    <div key={course.id} className="card-panel course-card">
+                    <div key={course.id} className="card-panel course-card" style={{ cursor: 'pointer' }} onClick={() => navigate('/notes')}>
                         <div style={{ height: '160px', background: '#f8fafc', borderRadius: '8px', marginBottom: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4rem' }}>
                             {course.image}
                         </div>

@@ -1,8 +1,12 @@
 import React from 'react';
 
 const Settings = () => {
+    const handleSave = () => {
+        alert("Success: Your settings have been updated!");
+    };
+
     return (
-        <div>
+        <div className="animate-enter">
             <h1 style={{ marginBottom: '2rem' }}>Settings</h1>
 
             <div style={{ maxWidth: '800px', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -19,7 +23,7 @@ const Settings = () => {
                             <input className="input-field" defaultValue="piyush@example.com" />
                         </div>
                     </div>
-                    <button className="btn-primary">Save Changes</button>
+                    <button className="btn-primary" onClick={handleSave}>Save Changes</button>
                 </div>
 
                 {/* Password */}
@@ -39,7 +43,7 @@ const Settings = () => {
                             <input className="input-field" type="password" />
                         </div>
                     </div>
-                    <button className="btn-primary" style={{ background: 'var(--text-dark)' }}>Update Password</button>
+                    <button className="btn-primary" onClick={handleSave} style={{ background: 'var(--text-dark)' }}>Update Password</button>
                 </div>
 
                 {/* Preferences */}

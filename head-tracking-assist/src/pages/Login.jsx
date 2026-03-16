@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { FaGoogle } from 'react-icons/fa';
+import { FaGoogle, FaUserGraduate, FaUser } from 'react-icons/fa';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [role, setRole] = useState('student');
+    const { login } = useAuth();
     const navigate = useNavigate();
 
     const handleLogin = (e) => {
         e.preventDefault();
-        // Login logic here...
-        navigate('/dashboard');
+        login({ email }, role);
+        navigate(role === 'teacher' ? '/teacher' : '/dashboard');
     };
 
     return (
@@ -38,6 +40,37 @@ const Login = () => {
                         <div className="auth-logo">V</div>
                         <h2>Welcome Back</h2>
                         <p>Please enter your details to sign in.</p>
+                    </div>
+
+                    <div className="role-selector" style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
+                        <button 
+                            type="button" 
+                            className={`role-btn ${role === 'student' ? 'active' : ''}`}
+                            onClick={() => setRole('student')}
+                            style={{
+                                flex: 1, padding: '0.75rem', borderRadius: '8px', border: '1px solid #ddd',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                                background: role === 'student' ? 'var(--primary-color)' : 'white',
+                                color: role === 'student' ? 'white' : 'var(--text-dark)',
+                                fontWeight: '600', cursor: 'pointer', transition: '0.3s'
+                            }}
+                        >
+                            <FaUser /> Student
+                        </button>
+                        <button 
+                            type="button" 
+                            className={`role-btn ${role === 'teacher' ? 'active' : ''}`}
+                            onClick={() => setRole('teacher')}
+                            style={{
+                                flex: 1, padding: '0.75rem', borderRadius: '8px', border: '1px solid #ddd',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                                background: role === 'teacher' ? 'var(--primary-color)' : 'white',
+                                color: role === 'teacher' ? 'white' : 'var(--text-dark)',
+                                fontWeight: '600', cursor: 'pointer', transition: '0.3s'
+                            }}
+                        >
+                            <FaUserGraduate /> Teacher
+                        </button>
                     </div>
 
                     <form onSubmit={handleLogin}>

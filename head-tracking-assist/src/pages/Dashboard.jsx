@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
-import { FaBook, FaRobot, FaCheckCircle, FaUniversalAccess, FaMicrophone, FaBrain, FaEye } from 'react-icons/fa';
+import React from 'react';
+import { FaBook, FaRobot, FaCheckCircle, FaUniversalAccess, FaBrain, FaEye } from 'react-icons/fa';
 import { useHeadTrackingContext } from '../context/HeadTrackingContext';
-import TeacherDashboard from '../components/TeacherDashboard';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
-    const [userRole, setUserRole] = useState('student');
+    const { role } = useAuth();
     const { trackingData } = useHeadTrackingContext();
-
-    if (userRole === 'teacher') {
-        return <TeacherDashboard />;
-    }
+    const navigate = useNavigate();
 
     const stats = [
         { title: 'Courses Enrolled', value: '4', icon: <FaBook />, color: 'blue' },
@@ -36,9 +34,6 @@ const Dashboard = () => {
                      }}>
                         <FaEye /> {trackingData?.isTracking ? "AI Tracking Active" : "Tracking Disabled"}
                     </div>
-                    <button onClick={() => setUserRole('teacher')} className="btn-primary" style={{ background: '#333' }}>
-                        Teacher Portal
-                    </button>
                 </div>
             </div>
 
@@ -73,7 +68,7 @@ const Dashboard = () => {
                             <div className="progress-bar" style={{ height: '8px', background: '#eee', borderRadius: '4px', margin: '1rem 0', width: '80%' }}>
                                 <div style={{ height: '100%', width: '65%', background: 'var(--primary-color)', borderRadius: '4px' }}></div>
                             </div>
-                            <button className="btn-primary">Resume Session</button>
+                            <button className="btn-primary" onClick={() => navigate('/courses')}>Resume Session</button>
                         </div>
                     </div>
                 </div>
@@ -100,7 +95,11 @@ const Dashboard = () => {
                             <span style={{ color: 'var(--text-light)' }}>Off</span>
                         </div>
                     </div>
-                    <button className="btn-primary w-full" style={{ marginTop: '1.5rem', background: 'var(--secondary-bg)', color: 'var(--text-dark)', border: '1px solid #ddd' }}>
+                    <button 
+                        className="btn-primary w-full" 
+                        onClick={() => navigate('/progress')}
+                        style={{ marginTop: '1.5rem', background: 'var(--secondary-bg)', color: 'var(--text-dark)', border: '1px solid #ddd' }}
+                    >
                         View AI Analytics
                     </button>
                 </div>
