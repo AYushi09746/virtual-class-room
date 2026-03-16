@@ -1,4 +1,4 @@
-# VirtClass: AI-Powered Inclusive Classroom 🚀
+# VirtClass: Premium AI-Inclusive Classroom 🚀
 
 VirtClass is a next-generation virtual learning platform designed with **Human-Computer Interaction (HCI)** at its core. It empowers students with motor, visual, and cognitive disabilities through an empathy-driven interface and advanced assistive AI.
 
@@ -8,50 +8,59 @@ VirtClass is a next-generation virtual learning platform designed with **Human-C
 - **Assistive AI (Gaze-to-Action)**: Webcam-based head tracking using **MediaPipe FaceMesh** for precise, hands-free navigation.
 - **Voice Link**: Full conversational interface via **Web Speech API** for navigating pages, reading content, and interacting with the AI Assistant.
 - **Accessibility Profiles**: Intelligent pre-configuration based on user needs (Motor, Visual, Cognitive) selected during a seamless login experience.
-- **Faculty Portal**: A dedicated environment for teachers to manage assignments, monitor student focus levels, and post announcements with a clean, professional UI.
-- **Smart Notes**: A focused environment for continuing lessons with integrated AI explanations and voice feedback.
+- **Faculty Portal**: A dedicated environment for professors to manage assignments, monitor student analytics, and post announcements with a clean, professional glassmorphism UI.
+- **AI Learning Hub**: A chat interface with visual pulse feedback and low-latency responses for concept explanation.
 
 ## 🛠️ Technology Stack
 
-- **Frontend**: React 18+ (Vite)
-- **Styling**: Vanilla CSS (Custom Design System with Premium Tokens)
-- **Computer Vision**: @mediapipe/face_mesh
-- **Speech Engine**: Web Speech API (Recognition + Synthesis)
-- **State Management**: React Context API (Auth, Theme, Accessibility, Tracking)
+- **Frontend**: React 19 (Vite)
+- **Styling**: Modern CSS Design System (Custom Tokens & Glassmorphism)
+- **AI/Vision**: @mediapipe/face_mesh, @mediapipe/camera_utils
+- **Voice**: Web Speech API (Recognition + Synthesis)
+- **Security**: Role-based access control (RBAC) & Context-driven Auth
 
-## 📂 Architecture Overview
+## 📂 Simplified Structure
 
-- `/head-tracking-assist`: The core React engine.
-  - `/src/hooks/useHeadTracking.js`: Logic for smoothing, deadzones, and low-pass filtering of head movements.
-  - `/src/context/AccessibilityContext.jsx`: Global profile management.
-  - `/src/components/TeacherDashboard.jsx`: Reimagined faculty management portal.
-- `/server`: (Optional) Node.js backend for AI chat persistence and user management.
+```text
+/virtal classroom project
+├── /head-tracking-assist    # React UI Engine
+│   ├── /src/components      # Optimized HCI Components (Layout, HUD, Voice)
+│   ├── /src/pages           # Premium Styled Views (Dashboard, Login, AI)
+│   ├── /src/context         # Global State (Accessibility, Tracking, Auth)
+│   └── index.css            # Global Design System Tokens
+└── /server                  # Backend Services
+    ├── server.js            # Express API for AI & Data
+    └── routes/              # Modular API Endpoints
+```
 
-## ⚙️ Quick Start
+## ⚙️ How to Run
 
-### 1. Prerequisite
-- Node.js (v16+) installed.
-- A functional webcam (for head tracking features).
+### 1. Requirements
+- **Node.js**: v18.0.0 or higher
+- **Browser**: Chrome/Edge (Recommended for Web Speech & MediaPipe support)
+- **Hardware**: Functional Webcam
 
-### 2. Frontend Installation
+### 2. Launch Frontend (Terminal 1)
 ```bash
-cd head-tracking-assist
+cd "virtal classroom project/head-tracking-assist"
 npm install
 npm run dev
 ```
+> Access via: **http://localhost:5173**
 
-### 3. Backend (Optional for AI Chat)
+### 3. Launch Backend (Terminal 2)
 ```bash
-cd server
+cd "virtal classroom project/server"
 npm install
 npm start
 ```
+> API running on: **http://localhost:5000**
 
-## 🏆 Our Objective
-Most digital classrooms fail users with special needs due to small "hit zones", complex navigation, and lack of diverse input methods. **VirtClass** solves this by providing:
-1. **Large Hit Zones** (Fitts's Law optimization).
-2. **Contextual Voice Commands**.
-3. **Adaptive UI** that morphs based on user disability profile.
+## 🏆 HCI Philosophy
+VirtClass follows strict HCI guidelines to ensure accessibility:
+1. **Fitts's Law**: Large interactive elements for easier motor-based targeting.
+2. **Hick's Law**: Minimalistic dashboards to reduce cognitive load.
+3. **Feedback Loops**: Immediate visual (Pulse) and auditory (Voice) feedback for every action.
 
 ---
-*Powered by Empathy & Artificial Intelligence.* 🏳️‍🌈
+*Developed with ❤️ for an inclusive future.* 🏳️‍🌈
