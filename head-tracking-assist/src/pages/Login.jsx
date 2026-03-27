@@ -60,7 +60,7 @@ const Login = () => {
             <div className="auth-form-wrapper">
                 <div className="auth-card">
                     <div className="auth-header">
-                        <div className="logo-icon" style={{ margin: '0 auto 1.5rem' }}>V</div>
+                        <div className="logo-icon" style={{ margin: '0 auto 1.5rem' }}>N</div>
                         <h2 style={{ fontSize: '2rem', fontWeight: 800 }}>Welcome Back</h2>
                         <p style={{ color: 'var(--text-secondary)' }}>Sign in to continue your learning journey.</p>
                     </div>

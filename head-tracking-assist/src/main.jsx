@@ -11,7 +11,7 @@ if (container) {
       <App />
     </React.StrictMode>
   );
-  console.log('VirtClass: Frontend Mounted Successfully');
+  console.log('Nexus ED: Frontend Mounted Successfully');
 } else {
   console.error('CRITICAL: Root container not found!');
   document.body.innerHTML = '<h1 style="color:red; text-align:center; margin-top:50px">ERROR: Could not find "root" element in index.html</h1>';

@@ -31,8 +31,8 @@ const Sidebar = () => {
     return (
         <aside className="sidebar animate-enter">
             <div className="sidebar-header" style={{ marginBottom: '4rem' }}>
-                <div className="logo-icon" style={{ borderRadius: '14px', width: '45px', height: '45px' }}>V</div>
-                <h2 className="logo-text" style={{ fontSize: '1.6rem', color: 'var(--brand-secondary)' }}>VirtClass</h2>
+                <div className="logo-icon" style={{ borderRadius: '14px', width: '45px', height: '45px' }}>N</div>
+                <h2 className="logo-text" style={{ fontSize: '1.6rem', color: 'var(--brand-secondary)' }}>Nexus ED</h2>
             </div>
 
             <nav className="sidebar-nav">
